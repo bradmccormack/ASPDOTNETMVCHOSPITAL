@@ -25,8 +25,7 @@
                     <li>@Html.ActionLink("Patient Visits", "PatientVisits", "Patient")</li>
                     <li>@Html.ActionLink("Doctors", "DoctorList", "Doctor")</li>
                     <li>@Html.ActionLink("Beds", "BedList", "Bed")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("SiteMap", "SiteMap", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
@@ -36,7 +35,7 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - Hospital Manager Enterpise v1.0</p>
+            <p class="text-muted">&copy; @DateTime.Now.Year - Hospital Manager Enterpise v1.0</p>
         </footer>
     </div>
 

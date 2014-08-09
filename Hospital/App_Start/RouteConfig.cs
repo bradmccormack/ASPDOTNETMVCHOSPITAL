@@ -18,6 +18,13 @@ namespace Hospital
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "Sitemap", 
+                url: "Sitemap.xml",
+                defaults: new { controller = "Home", action = "Sitemap" });
+          
+
         }
     }
 }
