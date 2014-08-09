@@ -10,7 +10,7 @@ using Microsoft.Owin.Security;
 using Hospital.Models;
 using Hospital.Identity;
 
-namespace DapperIdentityDemo.Controllers
+namespace Hospital.Controllers
 {
     [Authorize]
     public class AccountController : Controller

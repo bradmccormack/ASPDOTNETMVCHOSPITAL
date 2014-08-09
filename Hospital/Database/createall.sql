@@ -68,6 +68,10 @@ INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('mary', '1000:ixhUzK7
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('fred', '1000:IQgo73XlxxuZEPOaH8gGEzwInqGkiVUh:+D9V7AECHtuHXmCJPWyBcIz08ATOSkuK');
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUEs ('brad', '1000:uQW3eBzW1Es08tqT39tuXuR3jS0+HUo/:xmH9G4RdsIA7QW/6TZSKKOJLf38kdUdI');
 
+INSERT INTO Patient(Name, Address, DateOfBirth, Phone, EmergencyContact, DateOfRegistration)
+VALUES ('Brad McCormack', '221 Princess Highway , Albion Park Rail', '19790926 10:34:09 AM',
+'0490078069', 'Sarina McCormack', '09/08/2014');
+
 GO
 
 COMMIT TRANSACTION;

@@ -41,7 +41,7 @@ namespace Hospital.Identity
 
             return Task.Factory.StartNew(() =>
             {
-                User user = new User();
+                User user = null;
 
                 using (SqlConnection connection = new SqlConnection(connectionString))
                 {
@@ -54,12 +54,16 @@ namespace Hospital.Identity
                         connection.Open();
                         SqlDataReader reader = command.ExecuteReader();
                         Boolean read = reader.Read();
+
                         if (read)
                         {
-                            user.UserId = (int)reader[0];
-                            user.UserName = reader[1].ToString();
-                            user.PasswordHash = reader[2].ToString();
-                            user.SecurityStamp = reader[0].ToString(); // just set it to the ID for now.. TODO figure this out
+                            user = new User
+                            {
+                                UserId = reader.GetInt32(reader.GetOrdinal("Id")),
+                                UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                                PasswordHash = reader.GetString(reader.GetOrdinal("Password")),
+                                SecurityStamp = reader.GetInt32(reader.GetOrdinal("Id")).ToString()
+                            };
                         }
                         reader.Close();
                     }
@@ -95,10 +99,13 @@ namespace Hospital.Identity
                         Boolean read = reader.Read();
                         if (read)
                         {
-                            user.UserId = (int)reader[0];
-                            user.UserName = reader[1].ToString();
-                            user.PasswordHash = reader[2].ToString();
-                            user.SecurityStamp = reader[0].ToString(); // just set it to the ID for now.. TODO figure this out
+                            user = new User
+                            {
+                                UserId = reader.GetInt32(reader.GetOrdinal("Id")),
+                                UserName = reader.GetString(reader.GetOrdinal("UserName")),
+                                PasswordHash = reader.GetString(reader.GetOrdinal("Password")),
+                                SecurityStamp = reader.GetInt32(reader.GetOrdinal("Id")).ToString() // just set it to the ID for now.. TODO figure this out
+                            };
                         }
                         reader.Close();
                        

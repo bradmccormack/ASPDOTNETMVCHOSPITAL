@@ -136,7 +136,7 @@ namespace Hospital.Models
         private int _Id;
         private String _Name;
         private String _Address;
-        private String _DOB;
+        private DateTime _DOB;
         private String _Phone;
         private String _Emergency;
         private DateTime _DOR;
@@ -177,7 +177,7 @@ namespace Hospital.Models
             }
         }
 
-        public string DateOfBirth
+        public DateTime DateOfBirth
         {
             get
             {
