@@ -18,7 +18,10 @@
                 </button>
                 @Html.ActionLink("Hospital Manager Enterprise", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+
             <div class="navbar-collapse collapse">
+@if (Request.IsAuthenticated)
+{ 
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Patients", "PatientList", "Patient")</li>
                     <li>@Html.ActionLink("Patient Registration", "PatientRego", "Patient")</li>
@@ -27,6 +30,7 @@
                     <li>@Html.ActionLink("Beds", "BedList", "Bed")</li>
                     <li>@Html.ActionLink("SiteMap", "SiteMap", "Home")</li>
                 </ul>
+}  
                 @Html.Partial("_LoginPartial")
             </div>
         </div>
