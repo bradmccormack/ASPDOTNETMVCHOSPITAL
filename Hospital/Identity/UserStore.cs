@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Microsoft.AspNet.Identity;
 using Hospital.Models;
+using System.Data;
 
 
 namespace Hospital.Identity
@@ -34,44 +33,41 @@ namespace Hospital.Identity
         }
 
         #region IUserStore
-        public virtual Task CreateAsync(User user)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            return Task.Factory.StartNew(() =>
-            {
-                user.UserId = Guid.NewGuid();
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    connection.Execute("insert into Users(UserId, UserName, PasswordHash, SecurityStamp) values(@userId, @userName, @passwordHash, @securityStamp)", user);
-            });
-        }
-
-        public virtual Task DeleteAsync(User user)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    connection.Execute("deete from Users where UserId = @userId", new { user.UserId });
-            });
-        }
-
+      
         public virtual Task<User> FindByIdAsync(string userId)
         {
             if (string.IsNullOrWhiteSpace(userId))
-                throw new ArgumentNullException("userId");
-
-            Guid parsedUserId;
-            if (!Guid.TryParse(userId, out parsedUserId))
-                throw new ArgumentOutOfRangeException("userId", string.Format("'{0}' is not a valid GUID.", new { userId }));
+                throw new ArgumentNullException("userName");
 
             return Task.Factory.StartNew(() =>
             {
+                User user = new User();
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
-                    return connection.Query<User>("select * from Users where UserId = @userId", new { userId = parsedUserId }).SingleOrDefault();
+                {
+
+                    SqlCommand command = new SqlCommand("SELECT Id, UserName, Password, SecurityStamp FROM BookingStaff WHERE Id = @id", connection);
+                    command.Parameters.AddWithValue("@id", userId);
+
+                    try
+                    {
+                        connection.Open();
+                        SqlDataReader reader = command.ExecuteReader();
+                        Boolean read = reader.Read();
+                        if (read)
+                        {
+                            user.UserId = (int)reader[0];
+                            user.UserName = reader[1].ToString();
+                            user.PasswordHash = reader[2].ToString();
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                return user;
             });
         }
 
@@ -82,83 +78,41 @@ namespace Hospital.Identity
 
             return Task.Factory.StartNew(() =>
             {
+                User user = new User();
+
                 using (SqlConnection connection = new SqlConnection(connectionString))
-                    return connection.Query<User>("select * from Users where lower(UserName) = lower(@userName)", new { userName }).SingleOrDefault();
+                {
+            
+                    SqlCommand command = new SqlCommand("SELECT Id, UserName, Password, SecurityStamp FROM [dbo].[BookingStaff] WHERE lower(UserName) = lower(@username)" , connection);
+                    command.Parameters.AddWithValue("@username", userName);
+
+                    try
+                    {
+                        connection.Open();
+
+                        SqlDataReader reader = command.ExecuteReader(CommandBehavior.SingleRow);
+                        Boolean read = reader.Read();
+                        if (read)
+                        {
+                            user.UserId = (int)reader[0];
+                            user.UserName = reader[1].ToString();
+                            user.PasswordHash = reader[2].ToString();
+                        }
+                        reader.Close();
+                       
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine(ex.Message);
+                    }
+                }
+                return user;
             });
         }
 
-        public virtual Task UpdateAsync(User user)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    connection.Execute("update Users set UserName = @userName, PasswordHash = @passwordHash, SecurityStamp = @securityStamp where UserId = @userId", user);
-            });
-        }
         #endregion
 
-        #region IUserLoginStore
-        public virtual Task AddLoginAsync(User user, UserLoginInfo login)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            if (login == null)
-                throw new ArgumentNullException("login");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    connection.Execute("insert into ExternalLogins(ExternalLoginId, UserId, LoginProvider, ProviderKey) values(@externalLoginId, @userId, @loginProvider, @providerKey)",
-                        new { externalLoginId = Guid.NewGuid(), userId = user.UserId, loginProvider = login.LoginProvider, providerKey = login.ProviderKey });
-            });
-        }
-
-        public virtual Task<User> FindAsync(UserLoginInfo login)
-        {
-            if (login == null)
-                throw new ArgumentNullException("login");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    return connection.Query<User>("select u.* from Users u inner join ExternalLogins l on l.UserId = u.UserId where l.LoginProvider = @loginProvider and l.ProviderKey = @providerKey",
-                        login).SingleOrDefault();
-            });
-        }
-
-        public virtual Task<IList<UserLoginInfo>> GetLoginsAsync(User user)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    return (IList<UserLoginInfo>)connection.Query<UserLoginInfo>("select LoginProvider, ProviderKey from ExternalLogins where UserId = @userId", new { user.UserId }).ToList();
-            });
-        }
-
-        public virtual Task RemoveLoginAsync(User user, UserLoginInfo login)
-        {
-            if (user == null)
-                throw new ArgumentNullException("user");
-
-            if (login == null)
-                throw new ArgumentNullException("login");
-
-            return Task.Factory.StartNew(() =>
-            {
-                using (SqlConnection connection = new SqlConnection(connectionString))
-                    connection.Execute("delete from ExternalLogins where UserId = @userId and LoginProvider = @loginProvider and ProviderKey = @providerKey",
-                        new { user.UserId, login.LoginProvider, login.ProviderKey });
-            });
-        }
-        #endregion
-
+ 
         #region IUserPasswordStore
         public virtual Task<string> GetPasswordHashAsync(User user)
         {
@@ -205,5 +159,41 @@ namespace Hospital.Identity
         }
 
         #endregion
+
+
+        public Task CreateAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task AddLoginAsync(User user, UserLoginInfo login)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<User> FindAsync(UserLoginInfo login)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IList<UserLoginInfo>> GetLoginsAsync(User user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoveLoginAsync(User user, UserLoginInfo login)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

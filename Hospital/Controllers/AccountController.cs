@@ -16,7 +16,7 @@ namespace DapperIdentityDemo.Controllers
     public class AccountController : Controller
     {
         public AccountController()
-            : this(new UserManager<User>(new UserStore()))
+            : this(new BMUserManager())
         {
         }
 
@@ -91,7 +91,13 @@ namespace DapperIdentityDemo.Controllers
                 await SignInAsync(user, isPersistent: false);
                 return RedirectToLocal(returnUrl);
             }
-          
+            else
+            {
+                // If the user does not have an account, then prompt the user to create an account
+                ViewBag.ReturnUrl = returnUrl;
+                ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
+                return View("ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { UserName = loginInfo.DefaultUserName });
+            }
         }
 
         //
