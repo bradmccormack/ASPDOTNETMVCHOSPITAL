@@ -15,3 +15,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+img#logo {
+    width: 450px;
+
+}
