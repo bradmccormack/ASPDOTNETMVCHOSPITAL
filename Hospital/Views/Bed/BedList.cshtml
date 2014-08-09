@@ -1,0 +1,30 @@
+﻿@using Hospital.Interfaces
+
+@{
+    ViewBag.Title = "BedList";
+}
+
+<h2>Hospital Beds</h2>
+
+@model IEnumerable<IBed>
+<table class="table table-bordered table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Rate</th>
+            <th>Type</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.RatePerDay</td>
+                <td>@item.BedType</td>
+            </tr>
+        }
+    </tbody>
+</table>
