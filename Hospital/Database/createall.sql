@@ -1,6 +1,4 @@
 
-
-
 USE [master]
 GO
 
@@ -59,15 +57,16 @@ CREATE TABLE [dbo].[Visit](
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[BookingStaff](
-	[Id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	[Id] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[UserName] [varchar](255) UNIQUE NOT NULL,
-	[Password] [varchar](255) NOT NULL
+	[Password] [varchar](255) NOT NULL,
+	[SecurityStamp] VARCHAR(MAX)
 )
 
 /* passwords are hashed securely -- atribution goes to https://crackstation.net/hashing-security.htm*/
-INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('mary', '1000:Nv++5IgtadCriUBFs6szekTEPP7fwWkT:ArozYQ6frh11t1WTbW9c4u1VqPvNp3uV');
-INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('fred', '1000:lSh4v3MJOTVsTEsXRg0eOvL2NfvVn1EL:8QuN7nmF4cMgaNcGF4igHKS5DNDNmvXx');
-INSERT INTO [dbo].BookingStaff(UserName, Password) VALUEs ('brad', '1000:04/bs+cXvSyFplTjFqEp01BEEg4YrKST:yD9QVjZQ9fUXKr6F0WXxXd6gm/5j/pgw');
+INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('mary', '1000:ixhUzK7cOmgI69KTHg2UwoBoOsLBbAWD:HzZU7Z6ZwmEkxL0wsCWSqvV225OV1Dxl');
+INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('fred', '1000:IQgo73XlxxuZEPOaH8gGEzwInqGkiVUh:+D9V7AECHtuHXmCJPWyBcIz08ATOSkuK');
+INSERT INTO [dbo].BookingStaff(UserName, Password) VALUEs ('brad', '1000:uQW3eBzW1Es08tqT39tuXuR3jS0+HUo/:xmH9G4RdsIA7QW/6TZSKKOJLf38kdUdI');
 
 GO
 

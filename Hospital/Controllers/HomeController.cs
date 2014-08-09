@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace Hospital.Controllers
 {
+
     public class HomeController : Controller
     {
         public ActionResult Index()
@@ -27,4 +28,5 @@ namespace Hospital.Controllers
             return View();
         }
     }
+    
 }
