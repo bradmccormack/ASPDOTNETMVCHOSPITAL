@@ -25,9 +25,9 @@ namespace Hospital.Identity
 
         public override PasswordVerificationResult VerifyHashedPassword(string hashedPassword, string providedPassword)
         {
-            String providedPasswordHash = PasswordHash.PasswordHash.CreateHash(providedPassword);
 
-            if(PasswordHash.PasswordHash.ValidatePassword(hashedPassword, providedPasswordHash))
+
+            if(PasswordHash.PasswordHash.ValidatePassword(providedPassword, hashedPassword))
                 return PasswordVerificationResult.Success;
             else
                 return PasswordVerificationResult.Failed;

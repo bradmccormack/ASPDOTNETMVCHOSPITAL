@@ -59,6 +59,7 @@ namespace Hospital.Identity
                             user.UserId = (int)reader[0];
                             user.UserName = reader[1].ToString();
                             user.PasswordHash = reader[2].ToString();
+                            user.SecurityStamp = reader[0].ToString(); // just set it to the ID for now.. TODO figure this out
                         }
                         reader.Close();
                     }
@@ -97,6 +98,7 @@ namespace Hospital.Identity
                             user.UserId = (int)reader[0];
                             user.UserName = reader[1].ToString();
                             user.PasswordHash = reader[2].ToString();
+                            user.SecurityStamp = reader[0].ToString(); // just set it to the ID for now.. TODO figure this out
                         }
                         reader.Close();
                        
