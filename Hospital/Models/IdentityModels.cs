@@ -228,136 +228,18 @@ namespace Hospital.Models
 
     public class Visit : IVisit 
     {
-        private int _Id;
-        private bool _PatientType;
-        private int _DoctorId;
-        private int _PatientID;
-        private int _BedID;
-        private DateTime _DateOfVisit;
-        private DateTime _DateOfDischarge;
-        private String _Symptoms;
-        private String _Disease;
-        private String _Treatment;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Address { get; set; }
+        public bool isInPatient { get; set; }
+        public string DrName { get; set; }
+        public string BedName { get; set; }
+        public System.DateTime DateOfVisit { get; set; }
+        public System.DateTime DateOfDischarge { get; set; }
+        public string Symptoms { get; set; }
+        public string Disease { get; set; }
+        public string Treatment { get; set; }
 
-        public int Id
-        {
-            get
-            {
-                return _Id;
-            }
-            set
-            {
-                _Id = value;
-            }
-        }
-
-        public bool PatientType
-        {
-            get
-            {
-                return _PatientType;
-            }
-            set
-            {
-                _PatientType = value;
-            }
-        }
-
-        public int DoctorID
-        {
-            get
-            {
-                return _DoctorId;
-            }
-            set
-            {
-                _DoctorId = value;
-            }
-        }
-
-        public int PatientID
-        {
-            get
-            {
-                return _PatientID;
-            }
-            set
-            {
-                _PatientID = value;
-            }
-        }
-
-        public int BedID
-        {
-            get
-            {
-                return _BedID;
-            }
-            set
-            {
-                _BedID = value;
-            }
-        }
-
-        public DateTime DateOfVisit
-        {
-            get
-            {
-                return _DateOfVisit;
-            }
-            set
-            {
-                _DateOfVisit = value;
-            }
-        }
-
-        public DateTime DateOfDischarge
-        {
-            get
-            {
-                return _DateOfDischarge;
-            }
-            set
-            {
-                _DateOfDischarge = value;
-            }
-        }
-
-        public string Symptoms
-        {
-            get
-            {
-                return _Symptoms;
-            }
-            set
-            {
-                _Symptoms = value;
-            }
-        }
-
-        public string Disease
-        {
-            get
-            {
-                return _Disease;
-            }
-            set
-            {
-                _Disease = value;
-            }
-        }
-
-        public string Treatment
-        {
-            get
-            {
-                return _Treatment;
-            }
-            set
-            {
-                _Treatment = value;
-            }
-        }
     }
 
     #endregion

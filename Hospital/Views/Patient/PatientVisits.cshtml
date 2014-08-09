@@ -14,23 +14,17 @@ details of patient visits by patient name, date
 of visit and date of discharge.
 -->
 
-<!--
-Details of patient visits: should normally contain information as- patient name, address,
-type (in or out), problem (invent some, be creative!!) and diagnosis (medicine, surgery,
-etc.), date of visit and date of discharge (in case of an in patient).
--->
-
-<h5>TODO joins etc so it shows better info not just id's</h5>
 <table class="table table-bordered table-striped table-hover">
     <thead>
         <tr>
             <th>Id</th>
-            <th>PatientType</th>
-            <th>Doctor ID</th>
-            <th>Patient ID</th>
-            <th>Bed ID</th>
-            <th>Date of Visit</th>
-            <th>Date of Discharge</th>
+            <th>Name</th>
+            <th>Address</th>
+            <th>In-Patient</th>
+            <th>Doctor</th>
+            <th>Bed</th>
+            <th>Visit</th>
+            <th>Discharge</th>
             <th>Symptoms</th>
             <th>Disease</th>
             <th>Treatment</th>
@@ -41,10 +35,11 @@ etc.), date of visit and date of discharge (in case of an in patient).
         {
             <tr>
                 <td>@item.Id</td>
-                <td>@item.PatientType</td>
-                <td>@item.DoctorID</td>
-                <td>@item.PatientID</td>
-                <td>@item.BedID</td>
+                <td>@item.Name</td>
+                <td>@item.Address</td>
+                <td>@item.isInPatient</td>
+                <td>@item.DrName</td>
+                <td>@item.BedName</td>
                 <td>@item.DateOfVisit</td>
                 <td>@item.DateOfDischarge</td>
                 <td>@item.Symptoms</td>

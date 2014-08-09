@@ -28,13 +28,15 @@ namespace Hospital.Interfaces
         System.DateTime DateOfRegistration { get; set; }
     }
 
+
     public interface IVisit
     {
         int Id { get; set;}
-        bool PatientType { get; set; }
-        int DoctorID { get; set; }
-        int PatientID { get; set; }
-        int BedID { get; set; }
+        string Name { get; set; }
+        string Address { get; set; }
+        bool isInPatient { get; set; }
+        string DrName { get; set; }
+        string BedName { get; set; }
         System.DateTime DateOfVisit { get; set; }
         System.DateTime DateOfDischarge { get; set; }
         string Symptoms { get; set; }

@@ -138,7 +138,12 @@ namespace Hospital.Models
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = "SELECT Id, PatientType, DoctorID, PatientID, BedID, BedID, DateofVisit, DateofDischarge, Symptoms, Disease, Treatment FROM Visit WHERE Id = @id ORDER BY DateOfVisit DESC ";
+                cmd.CommandText = @"SELECT P.ID, P.Name, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                                    FROM Visit V
+                                    JOIN Patient P ON P.ID = V.PatientID
+                                    JOIN Doctor D ON D.ID = V.DoctorID
+                                    JOIN Bed B ON B.ID = V.BedID;
+                                    WHERE Id = @id ORDER BY DateOfVisit DESC ";
                 cmd.Parameters.AddWithValue("@id", id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -146,13 +151,14 @@ namespace Hospital.Models
                     {
                         return null;
                     }
+
                     return new Visit
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
-                        PatientType = reader.GetBoolean(reader.GetOrdinal("PatientType")),
-                        DoctorID = reader.GetInt32(reader.GetOrdinal("DoctorId")),
-                        PatientID = reader.GetInt32(reader.GetOrdinal("PatientID")),
-                        BedID = reader.GetInt32(reader.GetOrdinal("BedId")),
+                        Address = reader.GetString(reader.GetOrdinal("Address")),
+                        isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
+                        DrName = reader.GetString(reader.GetOrdinal("DocName")),
+                        BedName = reader.GetString(reader.GetOrdinal("BedName")),
                         DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
                         DateOfDischarge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge")),
                         Symptoms = reader.GetString(reader.GetOrdinal("Symptoms")),
@@ -171,7 +177,14 @@ namespace Hospital.Models
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = "SELECT Id, PatientType, DoctorID, PatientID, BedID, BedID, DateofVisit, DateofDischarge, Symptoms, Disease, Treatment FROM Visit ORDER BY DateOfVisit DESC ";
+                cmd.CommandText = @"SELECT P.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                                    FROM Visit V
+                                    JOIN Patient P ON P.ID = V.PatientID
+                                    JOIN Doctor D ON D.ID = V.DoctorID
+                                    JOIN Bed B ON B.ID = V.BedID
+                                    ORDER BY DateofVisit, PatientName";
+                                  
+
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
                     while (reader.Read())
@@ -179,10 +192,11 @@ namespace Hospital.Models
                         PatientVisits.Add(new Visit
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("id")),
-                            PatientType = reader.GetBoolean(reader.GetOrdinal("PatientType")),
-                            DoctorID = reader.GetInt32(reader.GetOrdinal("DoctorId")),
-                            PatientID = reader.GetInt32(reader.GetOrdinal("PatientID")),
-                            BedID = reader.GetInt32(reader.GetOrdinal("BedId")),
+                            Name = reader.GetString(reader.GetOrdinal("PatientName")),
+                            Address = reader.GetString(reader.GetOrdinal("Address")),
+                            isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
+                            DrName = reader.GetString(reader.GetOrdinal("DocName")),
+                            BedName = reader.GetString(reader.GetOrdinal("BedName")),
                             DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
                             DateOfDischarge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge")),
                             Symptoms = reader.GetString(reader.GetOrdinal("Symptoms")),
