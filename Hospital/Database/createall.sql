@@ -72,6 +72,12 @@ INSERT INTO Patient(Name, Address, DateOfBirth, Phone, EmergencyContact, DateOfR
 VALUES ('Brad McCormack', '221 Princess Highway , Albion Park Rail', '19790926 10:34:09 AM',
 '0490078069', 'Sarina McCormack', '09/08/2014');
 
+INSERT INTO Bed(BedName, RatePerDay, BedType) 
+VALUES('Hypo-condriac Bed', 50.95, 'Soft Bed');
+
+INSERT INTO Doctor(Name, Address, Phone)
+VALUEs ('DR JOE', '54 Smith Street, Wollongong NSW 2527', '63564634');
+
 GO
 
 COMMIT TRANSACTION;

@@ -22,7 +22,7 @@ namespace Hospital.Models
     {
         private int _Id;
         private string _Name;
-        private float _Rateperday;
+        private decimal _Rateperday;
         private string _BedType;
 
 
@@ -50,7 +50,7 @@ namespace Hospital.Models
             }
         }
 
-        public float RatePerDay
+        public decimal RatePerDay
         {
             get
             {
@@ -66,7 +66,7 @@ namespace Hospital.Models
         {
             get
             {
-                return BedType;
+                return _BedType;
             }
             set
             {
