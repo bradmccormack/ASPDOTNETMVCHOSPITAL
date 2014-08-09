@@ -78,6 +78,27 @@ VALUES('Hypo-condriac Bed', 50.95, 'Soft Bed');
 INSERT INTO Doctor(Name, Address, Phone)
 VALUEs ('DR JOE', '54 Smith Street, Wollongong NSW 2527', '63564634');
 
+INSERT INTO [dbo].[Visit]
+           ([PatientType]
+           ,[DoctorId]
+           ,[PatientID]
+           ,[BedId]
+           ,[DateofVisit]
+           ,[DateofDischarge]
+           ,[Symptoms]
+           ,[Disease]
+           ,[Treatment])
+     VALUES
+           (<PatientType, bit,>
+           ,<DoctorId, int,>
+           ,<PatientID, int,>
+           ,<BedId, int,>
+           ,<DateofVisit, datetime,>
+           ,<DateofDischarge, datetime,>
+           ,<Symptoms, varchar(1000),>
+           ,<Disease, varchar(1000),>
+           ,<Treatment, varchar(1000),>)
+
 GO
 
 COMMIT TRANSACTION;

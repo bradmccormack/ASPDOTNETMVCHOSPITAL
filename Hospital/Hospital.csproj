@@ -214,6 +214,7 @@
     <Content Include="Views\Patient\PatientList.cshtml" />
     <Content Include="Views\Doctor\DoctorList.cshtml" />
     <Content Include="Views\Bed\BedList.cshtml" />
+    <Content Include="Views\Patient\PatientVisits.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
