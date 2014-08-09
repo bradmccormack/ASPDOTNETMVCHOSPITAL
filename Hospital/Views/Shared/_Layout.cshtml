@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Hospital Manager Enterprise</title>
     @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
 
 </head>
@@ -16,19 +17,20 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Hospital Manager Enterprise", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                <a class="navbar-brand" href="@Url.Action("Index", "Home")"><span><i class="fa fa-hospital-o"></i> Hosptial Manager Enterprise</span></a>
             </div>
 
             <div class="navbar-collapse collapse">
 @if (Request.IsAuthenticated)
 { 
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Patients", "PatientList", "Patient")</li>
-                    <li>@Html.ActionLink("Patient Registration", "PatientRego", "Patient")</li>
-                    <li>@Html.ActionLink("Patient Visits", "PatientVisits", "Patient")</li>
-                    <li>@Html.ActionLink("Doctors", "DoctorList", "Doctor")</li>
-                    <li>@Html.ActionLink("Beds", "BedList", "Bed")</li>
-                    <li>@Html.ActionLink("SiteMap", "SiteMap", "Home")</li>
+                    <li><a href="@Url.Action("PatientList", "Patient")"><span><i class="fa fa-wheelchair"></i> Patients</span></a></li>
+                    <li><a href="@Url.Action("PatientRego", "Patient")"><span><i class="fa fa-edit"></i> Registration</span></a></li>
+                    <li><a href="@Url.Action("PatientVisits", "Patient")"><span><i class="fa fa-users"></i> Visits</span></a></li>
+                    <li><a href="@Url.Action("DoctorList", "Doctor")"><span><i class="fa fa-stethoscope"> Doctors</i></span></a></li>
+                    <li><a href="@Url.Action("BedList", "Bed")"><span><i class="fa fa-user"></i> Beds</span></a></li>
+                    <li><a href="@Url.Action("SiteMap", "Home")"><span><i class="fa fa-sitemap"></i> SiteMap</span></a></li>
+
                 </ul>
 }  
                 @Html.Partial("_LoginPartial")

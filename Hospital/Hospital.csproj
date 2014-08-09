@@ -168,7 +168,6 @@
     <Compile Include="Utility\PasswordHash.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="favicon.ico" />
