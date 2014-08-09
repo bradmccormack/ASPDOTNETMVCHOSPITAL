@@ -1,6 +1,4 @@
 
-
-
 USE [master]
 GO
 
@@ -59,9 +57,10 @@ CREATE TABLE [dbo].[Visit](
 ) ON [PRIMARY]
 
 CREATE TABLE [dbo].[BookingStaff](
-	[Id] [int] PRIMARY KEY IDENTITY(1,1) NOT NULL,
+	[Id] [int] NOT NULL PRIMARY KEY IDENTITY(1,1),
 	[UserName] [varchar](255) UNIQUE NOT NULL,
-	[Password] [varchar](255) NOT NULL
+	[Password] [varchar](255) NOT NULL,
+	[SecurityStamp] VARCHAR(MAX)
 )
 
 /* passwords are hashed securely -- atribution goes to https://crackstation.net/hashing-security.htm*/
