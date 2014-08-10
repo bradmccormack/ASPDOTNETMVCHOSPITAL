@@ -1,0 +1,46 @@
+﻿@using Hospital.Models
+
+@{
+    ViewBag.Title = "Patient Registration";
+}
+
+<h2><i class="fa fa-wheelchair"></i>  Patients on File</h2>
+
+@model ViewModel
+    
+
+@Html.AntiForgeryToken()
+    
+<table class="table table-borderd table-striped table-hover">
+    <thead>
+        <tr>
+            <td><button id="addpatient" class="btn btn-default" onclick="location.href='@Url.Action("PatientNew", "Patient")'"><i class="fa fa-plus-square"></i> Add new patient</button></td>
+        </tr>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Date Of Birth</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Date of Registration</th>
+            <th>Emergency Contact</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Patients)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.DateOfBirth</td>
+                <td>@item.Address</td>
+                <td>@item.Phone</td>
+                <td>@item.DateOfRegistration</td>
+                <td>@item.EmergencyContact</td>
+                <td><button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("PatientEdit", "Patient", new { PatientID = item.Id })'"><i class="fa fa-edit"></i> Edit </button></td>
+            </tr>
+        }
+    </tbody>
+ 
+</table>
