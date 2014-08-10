@@ -63,7 +63,6 @@ CREATE TABLE [dbo].[BookingStaff](
 	[SecurityStamp] VARCHAR(MAX)
 )
 
-/* passwords are hashed securely -- atribution goes to https://crackstation.net/hashing-security.htm*/
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('mary', '1000:ixhUzK7cOmgI69KTHg2UwoBoOsLBbAWD:HzZU7Z6ZwmEkxL0wsCWSqvV225OV1Dxl');
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('fred', '1000:IQgo73XlxxuZEPOaH8gGEzwInqGkiVUh:+D9V7AECHtuHXmCJPWyBcIz08ATOSkuK');
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUEs ('brad', '1000:uQW3eBzW1Es08tqT39tuXuR3jS0+HUo/:xmH9G4RdsIA7QW/6TZSKKOJLf38kdUdI');
@@ -78,26 +77,9 @@ VALUES('Hypo-condriac Bed', 50.95, 'Soft Bed');
 INSERT INTO Doctor(Name, Address, Phone)
 VALUEs ('DR JOE', '54 Smith Street, Wollongong NSW 2527', '63564634');
 
-INSERT INTO [dbo].[Visit]
-           ([PatientType]
-           ,[DoctorId]
-           ,[PatientID]
-           ,[BedId]
-           ,[DateofVisit]
-           ,[DateofDischarge]
-           ,[Symptoms]
-           ,[Disease]
-           ,[Treatment])
-     VALUES
-           (<PatientType, bit,>
-           ,<DoctorId, int,>
-           ,<PatientID, int,>
-           ,<BedId, int,>
-           ,<DateofVisit, datetime,>
-           ,<DateofDischarge, datetime,>
-           ,<Symptoms, varchar(1000),>
-           ,<Disease, varchar(1000),>
-           ,<Treatment, varchar(1000),>)
+INSERT INTO Visit(PatientType, DoctorID, PatientID, BedID, DateofVisit, DateofDischarge, Symptoms, Disease, Treatment)
+VALUES (0, 1, 1, 1, '09/08/2014', '10/08/2014', 'Severe Acne', 'Pimples', 'Clearasil')
+
 
 GO
 
