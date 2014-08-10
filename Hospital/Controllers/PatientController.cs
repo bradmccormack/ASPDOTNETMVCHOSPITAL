@@ -8,9 +8,6 @@ using System;
 
 namespace Hospital.Controllers
 {
-
-
-
     [Authorize]
     public class PatientController : Controller
     {
@@ -50,6 +47,9 @@ namespace Hospital.Controllers
             return View(Patients);
         }
 
+
+  
+
         public ActionResult PatientVisits(ViewModel vm)
         {
             if(ModelState.IsValid)
@@ -77,9 +77,32 @@ namespace Hospital.Controllers
                 _vm.PatientVisitations = new List<IVisit>();
 
             return View(_vm);
-
-           
         }
 
+        [HttpGet]
+        public ActionResult PatientEditList()
+        {
+            _vm.Patients = PatientRepository.GetPatients();
+            return View(_vm);
+        }
+
+        [HttpGet]
+        public ActionResult PatientEdit(int PatientID)
+        {
+            IPatient Patient = PatientRepository.GetPatient(PatientID);
+            return View(Patient);
+        }
+
+        [HttpPost]
+        public ActionResult PatientEdit(Patient Patient)
+        {
+            bool success = PatientRepository.UpdatePatient(Patient);
+            if(success)
+                return RedirectToAction("PatientEditList");
+
+            return View(Patient);
+
+       
+        }
     }
 }

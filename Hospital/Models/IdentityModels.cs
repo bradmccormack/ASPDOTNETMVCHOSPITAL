@@ -264,6 +264,7 @@ namespace Hospital.Models
     public class ViewModel
     {
         public IEnumerable<IVisit> PatientVisitations { get; set; }
+        public IEnumerable<IPatient> Patients { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public VisitSearch Search { get; set; }

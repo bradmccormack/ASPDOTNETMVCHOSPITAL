@@ -23,3 +23,7 @@ img#logo {
 form.search {
     margin-bottom :20px;
 }
+
+button.addpatient {
+    margin-bottom: 10px;
+}

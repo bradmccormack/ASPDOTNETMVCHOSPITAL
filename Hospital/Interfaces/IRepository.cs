@@ -15,6 +15,7 @@ namespace Hospital.Interfaces
     public interface IPatientRepository
     {
         IPatient GetPatient(int id);
+        bool UpdatePatient(IPatient patient);
         List<IPatient> GetPatients();
         IVisit GetVisit(int id);
         List<IVisit> GetVisits();
