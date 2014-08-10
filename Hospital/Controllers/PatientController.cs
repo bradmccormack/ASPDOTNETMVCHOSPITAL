@@ -20,6 +20,7 @@ namespace Hospital.Controllers
         {
             _vm = new ViewModel();
             _vm.Search = new VisitSearch();
+            _vm.Search.DateOfVisit = DateTime.Today;
         }
 
         public PatientController(IPatientRepository Patients)
@@ -72,7 +73,6 @@ namespace Hospital.Controllers
                 if (!String.IsNullOrEmpty(vm.Search.Name))
                     Visits = Visits.Where(a => a.Name.ToUpper().Contains(vm.Search.Name.ToUpper()));
 
-                //THE DATE IS ALWAYS COMING BACK AS MIN WTF FUCK 
                 Visits = Visits.Where(a => a.DateOfVisit >= vm.Search.DateOfVisit);
 
                 if (vm.Search.DateOfDischarge != null)

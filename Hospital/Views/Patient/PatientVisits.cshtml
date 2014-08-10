@@ -12,26 +12,25 @@
 <form class="form-inline search" role="form" method="post" href="@Url.Action("PatientVisits", "Patient")">
     <div class="form-group">
         <label for="filter-name" class="col-sm-5 control-label">Patient Name</label>
-        <div class="col-sm-10">
-          
+        <div class="col-sm-4">
             <input id="Search.Name" name="Search.Name" class="span2 search-query form-control" type="text" placeholder="Patient name to filter by ..." />
             @Html.ValidationMessageFor(model => model.Search.Name)
         </div>
     </div>
-
+   
     <div class="form-group">
-        <label for="filter-admission" class="col-sm-5 control-label"><i class="fa fa-calendar-o"></i> Admission</label>
-       <div class="col-sm-10">
-           <input id="Search.DateOfVisit" name="DateOfVisit"  class="span2 search-query form-control" type="date" />
-           @Html.ValidationMessageFor(model => model.Search.DateOfVisit)
-       </div>
+        <label for="Search.DateOfVisit" class="col-sm-5 control-label"><i class="fa fa-calendar-o"></i> Admission</label>
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Search.DateOfVisit, new { htmlAttributes = new { @class = "form-control span2 search-query" } })
+            @Html.ValidationMessageFor(model => model.Search.DateOfVisit, "", new { @class = "text-danger" })
+        </div>
     </div>
-
+   
     <div class="form-group">
-        <label for="filter-discharge" class="col-sm-5 control-label"><i class="fa fa-calendar-o"></i>  Discharge</label>
-        <div class="col-sm-10">
-            <input id="Search.DateOfDischarge" name="DateOfDischarge" class="span2 search-query form-control" type="date" />
-            @Html.ValidationMessageFor(model => model.Search.DateOfDischarge)
+        <label for="Search.DateOfDischarge" class="col-sm-5 control-label"><i class="fa fa-calendar-o"></i> Discharge</label>
+        <div class="col-md-4">
+            @Html.EditorFor(model => model.Search.DateOfDischarge, new { htmlAttributes = new { @class = "form-control span2 search-query" } })
+            @Html.ValidationMessageFor(model => model.Search.DateOfDischarge, "", new { @class = "text-danger" })
         </div>
     </div>
 

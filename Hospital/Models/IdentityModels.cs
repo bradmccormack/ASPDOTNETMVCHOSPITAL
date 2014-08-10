@@ -97,7 +97,6 @@ namespace Hospital.Models
         [StringLength(50, ErrorMessage = "Must be under 50 characters", MinimumLength = 0)]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Admision date required")]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
         public System.DateTime DateOfVisit { get; set; }
