@@ -101,6 +101,37 @@ namespace Hospital.Models
             }
         }
 
+
+        public bool RegisterPatient(IPatient patient)
+        {
+            bool success = false;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "INSERT INTO Patient(Name, Address, DateOfBirth, Phone, EmergencyContact, DateOfRegistration) VALUES (@Name, @Address, @DOB, @Phone, @Emergency, @DOR)";
+                cmd.Parameters.AddWithValue("@Id", patient.Id);
+                cmd.Parameters.AddWithValue("@Name", patient.Name);
+                cmd.Parameters.AddWithValue("@Address", patient.Address);
+                cmd.Parameters.AddWithValue("@DOB", patient.DateOfBirth);
+                cmd.Parameters.AddWithValue("@Emergency", patient.EmergencyContact);
+                cmd.Parameters.AddWithValue("@Phone", patient.Phone);
+                cmd.Parameters.AddWithValue("@DOR", patient.DateOfRegistration);
+
+                try
+                {
+                    int rows = cmd.ExecuteNonQuery();
+                    success = rows > 0;
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                }
+                return success;
+
+            }
+        }
+
         public bool UpdatePatient(IPatient patient)
         {
             bool success = false;

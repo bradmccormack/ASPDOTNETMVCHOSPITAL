@@ -16,6 +16,7 @@ namespace Hospital.Interfaces
     {
         IPatient GetPatient(int id);
         bool UpdatePatient(IPatient patient);
+        bool RegisterPatient(IPatient patient);
         List<IPatient> GetPatients();
         IVisit GetVisit(int id);
         List<IVisit> GetVisits();

@@ -27,8 +27,10 @@ namespace Hospital.Controllers
             PatientRepository = Patients;
         }
 
+
         public IPatientRepository PatientRepository {get; private set;}
 
+        [HttpGet]
         public ActionResult PatientList(string Name)
         {
             List<IPatient> Patients = null;
@@ -47,9 +49,7 @@ namespace Hospital.Controllers
             return View(Patients);
         }
 
-
-  
-
+        [HttpGet]
         public ActionResult PatientVisits(ViewModel vm)
         {
             if(ModelState.IsValid)
@@ -101,8 +101,22 @@ namespace Hospital.Controllers
                 return RedirectToAction("PatientEditList");
 
             return View(Patient);
+        }
 
-       
+        [HttpGet]
+        public ActionResult PatientNew()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult PatientNew(Patient Patient)
+        {
+            bool success = PatientRepository.RegisterPatient(Patient);
+            if (success)
+                return RedirectToAction("PatientEditList");
+
+            return View(Patient);
         }
     }
 }
