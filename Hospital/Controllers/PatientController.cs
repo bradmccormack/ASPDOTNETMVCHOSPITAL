@@ -49,35 +49,44 @@ namespace Hospital.Controllers
             return View(Patients);
         }
 
+
+
         [HttpGet]
-        public ActionResult PatientVisits(ViewModel vm)
+        public ActionResult PatientVisits()
         {
             if(ModelState.IsValid)
-            {
-                if (vm.Search == null)
-                    _vm.PatientVisitations = PatientRepository.GetVisits();
-                else
-                {
-                    
-                    IEnumerable<IVisit> Visits = PatientRepository.GetVisits();
-
-                    if (!String.IsNullOrEmpty(vm.Search.Name))
-                        Visits = Visits.Where(a => a.Name.ToUpper().Contains(vm.Search.Name.ToUpper()));
-
-                    //THE DATE IS ALWAYS COMING BACK AS MIN WTF FUCK 
-                    Visits = Visits.Where(a => a.DateOfVisit >= vm.Search.DateOfVisit);
-
-                    if (vm.Search.DateOfDischarge != null)
-                        Visits = Visits.Where(a => a.DateOfDischarge <= vm.Search.DateOfDischarge);
-
-                    _vm.PatientVisitations = Visits.ToList<IVisit>();
-                }
-            }
+                 _vm.PatientVisitations = PatientRepository.GetVisits();
             else 
                 _vm.PatientVisitations = new List<IVisit>();
 
             return View(_vm);
         }
+
+        [HttpPost]
+        public ActionResult PatientVisits(ViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                IEnumerable<IVisit> Visits = PatientRepository.GetVisits();
+
+                if (!String.IsNullOrEmpty(vm.Search.Name))
+                    Visits = Visits.Where(a => a.Name.ToUpper().Contains(vm.Search.Name.ToUpper()));
+
+                //THE DATE IS ALWAYS COMING BACK AS MIN WTF FUCK 
+                Visits = Visits.Where(a => a.DateOfVisit >= vm.Search.DateOfVisit);
+
+                if (vm.Search.DateOfDischarge != null)
+                    Visits = Visits.Where(a => a.DateOfDischarge <= vm.Search.DateOfDischarge);
+
+                _vm.PatientVisitations = Visits.ToList<IVisit>();
+                
+            }
+            else
+                _vm.PatientVisitations = new List<IVisit>();
+
+            return View(_vm);
+        }
+
 
         [HttpGet]
         public ActionResult PatientEditList()

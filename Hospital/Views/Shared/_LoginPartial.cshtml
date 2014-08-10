@@ -7,8 +7,7 @@
 
     <ul class="nav navbar-nav navbar-right">
         <li>
-            <!-- TODO make this just a label with a smiley face-->
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Manage", "Account", routeValues: null, htmlAttributes: new { title = "Manage" })
+            <a href="#"><i class="fa fa-smile-o"> </i>  Hello @User.Identity.GetUserName()</a>
         </li>
         <li><a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out"></i>Log off</a></li>
     </ul>

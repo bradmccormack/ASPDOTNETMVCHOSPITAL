@@ -18,6 +18,9 @@ textarea {
 
 img#logo {
     width: 450px;
+    display:block;
+    margin:auto;
+    margin-bottom:25px;
 }
 
 form.search {
@@ -30,5 +33,12 @@ button.addpatient {
 
 div.container-inner {
     height: 650px;
-    overflow-y: auto;
+
+}
+
+div#intro {
+    width: 500px;
+    text-align: center;
+    display: block;
+    margin: auto;
 }

@@ -22,9 +22,16 @@ namespace Hospital
             routes.MapRoute(
                 name: "Sitemap", 
                 url: "Sitemap.xml",
-                defaults: new { controller = "Home", action = "Sitemap" });
-          
+                defaults: new { controller = "Home", action = "Sitemap", id = UrlParameter.Optional });
 
+            // Show a 404 error page for anything else.
+            routes.MapRoute(
+                        "404-PageNotFound",
+                        "{*url}",
+                new { controller = "Error", action = "Error404" }
+            );
+
+           
         }
     }
 }
