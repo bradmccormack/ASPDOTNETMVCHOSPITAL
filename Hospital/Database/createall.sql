@@ -68,14 +68,24 @@ INSERT INTO [dbo].BookingStaff(UserName, Password) VALUES ('fred', '1000:IQgo73X
 INSERT INTO [dbo].BookingStaff(UserName, Password) VALUEs ('brad', '1000:uQW3eBzW1Es08tqT39tuXuR3jS0+HUo/:xmH9G4RdsIA7QW/6TZSKKOJLf38kdUdI');
 
 INSERT INTO Patient(Name, Address, DateOfBirth, Phone, EmergencyContact, DateOfRegistration)
-VALUES ('Brad McCormack', '221 Princess Highway , Albion Park Rail', '19790926 10:34:09 AM',
+VALUES ('Brad McCormack', '221 Princess Highway , Albion Park Rail NSW 2527', '19790926 10:34:09 AM',
+'0490078069', 'Sarina McCormack', '09/08/2014');
+
+INSERT INTO Patient(Name, Address, DateOfBirth, Phone, EmergencyContact, DateOfRegistration)
+VALUES ('Sarah Yolo', '100 Smith Street , Wollongong NSW 2500', '19790825 10:34:09 AM',
 '0490078069', 'Sarina McCormack', '09/08/2014');
 
 INSERT INTO Bed(BedName, RatePerDay, BedType) 
 VALUES('Hypo-condriac Bed', 50.95, 'Soft Bed');
 
+INSERT INTO Bed(BedName, RatePerDay, BedType)
+VALUES('Super Sick Bed', 150.69, 'Realistically Comfortable');
+
 INSERT INTO Doctor(Name, Address, Phone)
-VALUEs ('DR JOE', '54 Smith Street, Wollongong NSW 2527', '63564634');
+VALUES ('DR JOE', '54 Smith Street, Wollongong NSW 2527', '63564634');
+
+INSERT INTO Doctor(Name, Address, Phone)
+VALUES ('DR ZANKO', '100 Macco Street, Port Kembla 2505', '23124216969123');
 
 INSERT INTO Visit(PatientType, DoctorID, PatientID, BedID, DateofVisit, DateofDischarge, Symptoms, Disease, Treatment)
 VALUES (0, 1, 1, 1, '09/08/2014', '10/08/2014', 'Severe Acne', 'Pimples', 'Clearasil')
