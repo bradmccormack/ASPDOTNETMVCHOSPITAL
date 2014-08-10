@@ -11,7 +11,7 @@
 
 <form class="form-inline search" role="form" method="post" href="@Url.Action("PatientVisits", "Patient")">
     <div class="form-group">
-        <label for="filter-name" class="col-sm-5 control-label">Patient Name</label>
+        <label for="filter-name" class="col-sm-4 control-label">Patient Name</label>
         <div class="col-sm-4">
             <input id="Search.Name" name="Search.Name" class="span2 search-query form-control" type="text" placeholder="Patient name to filter by ..." />
             @Html.ValidationMessageFor(model => model.Search.Name)

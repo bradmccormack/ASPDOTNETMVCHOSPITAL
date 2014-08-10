@@ -73,7 +73,8 @@ namespace Hospital.Controllers
                 if (!String.IsNullOrEmpty(vm.Search.Name))
                     Visits = Visits.Where(a => a.Name.ToUpper().Contains(vm.Search.Name.ToUpper()));
 
-                Visits = Visits.Where(a => a.DateOfVisit >= vm.Search.DateOfVisit);
+                if(vm.Search.DateOfVisit != null)
+                    Visits = Visits.Where(a => a.DateOfVisit >= vm.Search.DateOfVisit);
 
                 if (vm.Search.DateOfDischarge != null)
                     Visits = Visits.Where(a => a.DateOfDischarge <= vm.Search.DateOfDischarge);

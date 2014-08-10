@@ -47,7 +47,7 @@ namespace Hospital.Interfaces
     public interface IVisitSearch
     {
         string Name { get; set; }
-        System.DateTime DateOfVisit { get; set; }
+        System.DateTime? DateOfVisit { get; set; }
         System.DateTime? DateOfDischarge { get; set; }
     }
 

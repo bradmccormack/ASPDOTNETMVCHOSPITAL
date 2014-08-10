@@ -99,7 +99,7 @@ namespace Hospital.Models
 
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         [DataType(DataType.Date)]
-        public System.DateTime DateOfVisit { get; set; }
+        public System.DateTime? DateOfVisit { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd")]
@@ -110,8 +110,6 @@ namespace Hospital.Models
     {
         public IEnumerable<IVisit> PatientVisitations { get; set; }
         public IEnumerable<IPatient> Patients { get; set; }
-
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public VisitSearch Search { get; set; }
     }
 #endregion
