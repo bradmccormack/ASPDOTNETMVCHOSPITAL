@@ -22,7 +22,7 @@ namespace Hospital.Controllers
 
         public IDoctorRepository DoctorRepository { get; private set; }
 
-
+        [HttpGet]
         public ActionResult DoctorList(string name)
         {
             List<IDoctor> Doctors = null;

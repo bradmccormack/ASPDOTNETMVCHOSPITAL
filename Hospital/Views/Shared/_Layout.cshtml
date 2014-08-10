@@ -38,7 +38,9 @@
         </div>
     </div>
     <div class="container body-content">
-        @RenderBody()
+        <div class="container-inner">
+            @RenderBody()
+        </div>
         <hr />
         <footer>
             <p class="text-muted">&copy; @DateTime.Now.Year - Hospital Manager Enterpise v1.0</p>

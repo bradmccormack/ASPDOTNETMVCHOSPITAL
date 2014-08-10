@@ -20,7 +20,8 @@ namespace Hospital.Controllers
         }
 
         public IBedRepository BedRepository { get; private set; }
-
+        
+        [HttpGet]
         public ActionResult BedList()
         {
             List<IBed> Beds;

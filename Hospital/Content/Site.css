@@ -27,3 +27,8 @@ form.search {
 button.addpatient {
     margin-bottom: 10px;
 }
+
+div.container-inner {
+    height: 650px;
+    overflow-y: auto;
+}
