@@ -18,5 +18,8 @@ textarea {
 
 img#logo {
     width: 450px;
+}
 
+form.search {
+    margin-bottom :20px;
 }

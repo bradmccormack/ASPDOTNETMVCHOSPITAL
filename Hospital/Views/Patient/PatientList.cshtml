@@ -1,14 +1,22 @@
 ﻿@using Hospital.Interfaces
 
 @{
-    ViewBag.Title = "PatientList";
+    ViewBag.Title = "Patient List";
 }
 
-<h2>Patients on File</h2>
+<h2><i class="fa fa-wheelchair"></i>  Patients on File</h2>
 
 @model IEnumerable<IPatient>
+    
 
-<input type="text" placeholder="name to filter by" />
+@Html.AntiForgeryToken()
+    
+ <form class="form-inline search" role="form" href="@Url.Action("PatientList", "Patient")">
+    <div class="form-group has-feedback">
+        <input class="span2 search-query form-control" type="text" name="Name" placeholder="Name to filter by ..." />
+        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+    </div>
+</form>
 
 <table class="table table-borderd table-striped table-hover">
     <thead>

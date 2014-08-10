@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.AspNet.Identity;
 using Hospital.Interfaces;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace Hospital.Models
 {
@@ -226,6 +228,7 @@ namespace Hospital.Models
         }
     }
 
+    #region Visit
     public class Visit : IVisit 
     {
         public int Id { get; set; }
@@ -241,6 +244,32 @@ namespace Hospital.Models
         public string Treatment { get; set; }
 
     }
+
+    public class VisitSearch : IVisitSearch
+    {
+        [DataType(DataType.Text)]
+        [StringLength(50, ErrorMessage = "Must be under 50 characters", MinimumLength = 0)]
+        public string Name { get; set; }
+
+        [Required(ErrorMessage = "Admision date required")]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
+        [DataType(DataType.Date)]
+        public System.DateTime DateOfVisit { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd")]
+        public System.DateTime? DateOfDischarge { get; set; }
+    }
+
+    public class ViewModel
+    {
+        public IEnumerable<IVisit> PatientVisitations { get; set; }
+
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public VisitSearch Search { get; set; }
+    }
+#endregion
+
 
     #endregion
 

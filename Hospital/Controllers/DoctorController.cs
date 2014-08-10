@@ -2,6 +2,8 @@
 using System.Web.Configuration;
 using System.Web.Mvc;
 using Hospital.Interfaces;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Hospital.Controllers
 {
@@ -20,10 +22,21 @@ namespace Hospital.Controllers
 
         public IDoctorRepository DoctorRepository { get; private set; }
 
-        // GET: Doctor
-        public ActionResult DoctorList()
+
+        public ActionResult DoctorList(string name)
         {
-            return View(DoctorRepository.GetDoctors());
+            List<IDoctor> Doctors = null;
+            if (ModelState.IsValid)
+            {
+                if (!string.IsNullOrEmpty(name))
+                    Doctors = DoctorRepository.GetDoctors().Where(e => e.Name.ToUpper().Contains(name.ToUpper())).ToList<IDoctor>();
+                else
+                    Doctors = DoctorRepository.GetDoctors();
+            }
+            else
+                Doctors = new List<IDoctor>();
+         
+            return View(Doctors);
         }
 
     }

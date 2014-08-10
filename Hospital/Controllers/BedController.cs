@@ -2,6 +2,7 @@
 using System.Web.Configuration;
 using System.Web.Mvc;
 using Hospital.Interfaces;
+using System.Collections.Generic;
 
 namespace Hospital.Controllers
 {
@@ -20,10 +21,15 @@ namespace Hospital.Controllers
 
         public IBedRepository BedRepository { get; private set; }
 
-        // GET: Bed
         public ActionResult BedList()
         {
-            return View(BedRepository.GetBeds());
+            List<IBed> Beds;
+            if (ModelState.IsValid)
+                Beds = BedRepository.GetBeds();
+            else
+                Beds = new List<IBed>();
+
+            return View(Beds);
         }
 
     }

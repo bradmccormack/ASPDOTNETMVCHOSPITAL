@@ -44,5 +44,12 @@ namespace Hospital.Interfaces
         string Treatment { get; set; }
     }
 
+    public interface IVisitSearch
+    {
+        string Name { get; set; }
+        System.DateTime DateOfVisit { get; set; }
+        System.DateTime? DateOfDischarge { get; set; }
+    }
+
 
 }

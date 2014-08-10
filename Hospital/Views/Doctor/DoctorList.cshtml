@@ -4,10 +4,18 @@
     ViewBag.Title = "DoctorList";
 }
 
-<h2>Doctors on Staff</h2>
+<h2><i class="fa fa-user-md"></i>  Doctors on Staff</h2>
+
+<form class="form-inline search" role="form" href="@Url.Action("PatientList", "Patient")">
+    <div class="form-group has-feedback">
+        <input class="span2 search-query form-control" type="text" name="Name" placeholder="Name to filter by ..." />
+        <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
+    </div>
+</form>
+
 
 @model IEnumerable<IDoctor>
-<table class="table table-striped table-bordered table-hover">
+<table class="table table-striped table-hover">
     <thead>
         <tr>
             <th>Id</th>
