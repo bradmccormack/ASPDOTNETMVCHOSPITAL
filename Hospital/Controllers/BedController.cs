@@ -6,6 +6,7 @@ using System.Collections.Generic;
 
 namespace Hospital.Controllers
 {
+     [Authorize]
     public class BedController : Controller
     {
         public BedController()

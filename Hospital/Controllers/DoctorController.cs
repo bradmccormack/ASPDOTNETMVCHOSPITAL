@@ -7,6 +7,7 @@ using System.Linq;
 
 namespace Hospital.Controllers
 {
+    [Authorize]
     public class DoctorController : Controller
     {
         public DoctorController()
