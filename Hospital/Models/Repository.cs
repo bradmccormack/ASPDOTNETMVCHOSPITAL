@@ -236,6 +236,56 @@ namespace Hospital.Models
             }
         }
 
+   
+
+        public List<IVisit> GetDoctorVisits(int DoctorID)
+        {
+            List<IVisit> DoctorVisits = new List<IVisit>();
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = @"SELECT P.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                                    FROM Visit V
+                                    JOIN Patient P ON P.ID = V.PatientID
+                                    JOIN Doctor D ON D.ID = V.DoctorID
+                                    JOIN Bed B ON B.ID = V.BedID
+                                    Where D.ID = @DoctorID
+                                    ORDER BY DateofVisit, PatientName";
+
+                cmd.Parameters.AddWithValue("@DoctorID", DoctorID);
+
+                using (SqlDataReader reader = cmd.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+
+                        DateTime? Discharge;
+                        if (reader.IsDBNull(reader.GetOrdinal("DateofDischarge")))
+                            Discharge = null;
+                        else Discharge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge"));
+
+                        DoctorVisits.Add(new Visit
+                        {
+                            Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            Name = reader.GetString(reader.GetOrdinal("PatientName")),
+                            Address = reader.GetString(reader.GetOrdinal("Address")),
+                            isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
+                            DrName = reader.GetString(reader.GetOrdinal("DocName")),
+                            BedName = reader.GetString(reader.GetOrdinal("BedName")),
+                            DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
+                            DateOfDischarge = Discharge,
+                            Symptoms = reader.GetString(reader.GetOrdinal("Symptoms")),
+                            Disease = reader.GetString(reader.GetOrdinal("Disease")),
+                            Treatment = reader.GetString(reader.GetOrdinal("Treatment"))
+                        });
+                    }
+                }
+            }
+            return DoctorVisits;
+        }
+
         public List<IVisit> GetVisits()
         {
             List<IVisit> PatientVisits = new List<IVisit>();

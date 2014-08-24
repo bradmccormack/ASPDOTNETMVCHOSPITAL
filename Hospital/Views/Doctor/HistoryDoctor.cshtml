@@ -1,0 +1,48 @@
+﻿@model Hospital.Models.ViewModelDoctorVisits
+
+@{
+    ViewBag.Title = "Doctor Treatment History";
+}
+
+<h2>Doctor Treatment History</h2>
+
+<div>
+    <h4>Visit</h4>
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Admission</th>
+                <th>Address</th>
+                <th>InPatient</th>
+                <th>Symptoms</th>
+                <th>Treatment</th>
+                <th>Disease</th>
+                <th>Bed</th>
+                <th>Discharge Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Visits)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.DateOfVisit</td>
+                    <td>@item.Address</td>
+                    <td>@item.isInPatient</td>
+                    <td>@item.Symptoms</td>
+                    <td>@item.Treatment</td>
+                    <td>@item.Disease</td>
+                    <td>@item.BedName</td>
+                    <td>@item.DateOfDischarge</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+   
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "DoctorList")
+</p>

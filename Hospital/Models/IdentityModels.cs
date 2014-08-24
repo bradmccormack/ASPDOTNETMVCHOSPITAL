@@ -106,6 +106,12 @@ namespace Hospital.Models
         public System.DateTime? DateOfDischarge { get; set; }
     }
 
+
+#endregion
+
+
+#region ViewModel
+
     public class ViewModel
     {
         public IEnumerable<IVisit> PatientVisitations { get; set; }
@@ -121,8 +127,13 @@ namespace Hospital.Models
         public Visit Visit { get; set; }
     }
 
-#endregion
+    public class ViewModelDoctorVisits
+    {
+        public IDoctor Doctor { get; set; }
+        public IEnumerable<IVisit> Visits { get; set; }
+    }
 
+#endregion
 
     #endregion
 

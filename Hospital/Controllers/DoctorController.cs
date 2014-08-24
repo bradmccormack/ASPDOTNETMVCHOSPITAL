@@ -66,6 +66,30 @@ namespace Hospital.Controllers
           
         }
 
+        [HttpGet]
+        public ActionResult HistoryDoctor(int DoctorID)
+        {
+            IList<IVisit> Visits;
+            IDoctor Doc;
+            if (ModelState.IsValid)
+            {
+                Visits = Repository.GetDoctorVisits(DoctorID);
+                Doc = Repository.GetDoctor(DoctorID);
+
+            }
+            else
+            {
+                Visits = new List<IVisit>();
+                Doc = new Doctor();
+            }
+
+            ViewModelDoctorVisits vm = new ViewModelDoctorVisits();
+            vm.Doctor = Doc;
+            vm.Visits = Visits;
+
+            return View(vm);
+        }
+
     }
        
 }

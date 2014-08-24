@@ -23,6 +23,7 @@
             <th>Address</th>
             <th>Phone</th>
             <th></th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -34,7 +35,7 @@
                 <td>@item.Address</td>
                 <td>@item.Phone</td>
                 <td><button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("AssignDoctor", "Doctor", new { DoctorID = item.Id })'"><i class="fa fa-medkit"></i> Assign Patient </button></td>
-
+                <td><button class="btn btn-default btn-sm" onclick="location.href='@Url.Action("HistoryDoctor", "Doctor", new { DoctorID = item.Id })'"><i class="fa fa-folder"></i> Patient History </button></td>
             </tr>
         }
     </tbody>
