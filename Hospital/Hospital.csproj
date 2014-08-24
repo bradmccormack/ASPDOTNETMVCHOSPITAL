@@ -215,6 +215,7 @@
     <Content Include="Views\Error\Error404.cshtml" />
     <Content Include="Views\Doctor\AssignDoctor.cshtml" />
     <Content Include="Views\Doctor\HistoryDoctor.cshtml" />
+    <Content Include="Views\Patient\PatientDischarge.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

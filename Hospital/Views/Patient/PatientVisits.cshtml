@@ -53,6 +53,7 @@
             <th>Symptoms</th>
             <th>Disease</th>
             <th>Treatment</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
@@ -70,6 +71,13 @@
                 <td>@item.Symptoms</td>
                 <td>@item.Disease</td>
                 <td>@item.Treatment</td>
+                <td>
+                    @if (item.isInPatient)
+                    {
+
+                        <button class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("PatientDischarge", "Patient", new { VisitID = item.Id })'"><i class="fa fa-sign-out"></i> Discharge </button>
+                    }
+                </td>       
             </tr>
         }
     </tbody>

@@ -78,6 +78,7 @@ namespace Hospital.Models
     public class Visit : IVisit 
     {
         public int Id { get; set; }
+        public int BedID { get; set; }
         public string Name { get; set; }
         public string Address { get; set; }
         public bool isInPatient { get; set; }
@@ -88,7 +89,6 @@ namespace Hospital.Models
         public string Symptoms { get; set; }
         public string Disease { get; set; }
         public string Treatment { get; set; }
-
     }
 
     public class VisitSearch : IVisitSearch
@@ -131,6 +131,12 @@ namespace Hospital.Models
     {
         public IDoctor Doctor { get; set; }
         public IEnumerable<IVisit> Visits { get; set; }
+    }
+
+    public class ViewModelDischargeInvoice
+    {
+        public IVisit Visit { get; set; }
+        public IBed Bed { get; set; }
     }
 
 #endregion

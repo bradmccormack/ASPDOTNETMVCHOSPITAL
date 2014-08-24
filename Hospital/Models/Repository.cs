@@ -25,7 +25,7 @@ namespace Hospital.Models
             using(var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = "SELECT BedNAme, RatePerDay, BedType FROM Bed WHERE Id = @id";
+                cmd.CommandText = "SELECT BedNAme, RatePerDay, BedType , id FROM Bed WHERE Id = @id";
                 cmd.Parameters.AddWithValue("@id", id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -73,7 +73,7 @@ namespace Hospital.Models
 
 
         #region Patient
-        IPatient IPatientRepository.GetPatient(int id)
+        public IPatient GetPatient(int id)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (var cmd = conn.CreateCommand())
@@ -123,7 +123,7 @@ namespace Hospital.Models
                     int rows = cmd.ExecuteNonQuery();
                     success = rows > 0;
                 }
-                catch (Exception ex)
+                catch
                 {
                     success = false;
                 }
@@ -153,7 +153,7 @@ namespace Hospital.Models
                     int rows = cmd.ExecuteNonQuery();
                     success = rows > 0;
                 }
-                catch(Exception ex)
+                catch
                 {
                     success = false;
                 }
@@ -200,12 +200,14 @@ namespace Hospital.Models
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = @"SELECT P.ID, P.Name, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                cmd.CommandText = @"SELECT V.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName,
+                                    V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment, B.ID as BedID
                                     FROM Visit V
                                     JOIN Patient P ON P.ID = V.PatientID
                                     JOIN Doctor D ON D.ID = V.DoctorID
-                                    JOIN Bed B ON B.ID = V.BedID;
-                                    WHERE Id = @id ORDER BY DateOfVisit DESC ";
+                                    JOIN Bed B ON B.ID = V.BedID
+                                    WHERE V.ID = @id 
+                                    ORDER BY DateOfVisit DESC ";
                 cmd.Parameters.AddWithValue("@id", id);
                 using (SqlDataReader reader = cmd.ExecuteReader())
                 {
@@ -222,8 +224,10 @@ namespace Hospital.Models
                     return new Visit
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
+                        BedID = reader.GetInt32(reader.GetOrdinal("BedID")),
                         Address = reader.GetString(reader.GetOrdinal("Address")),
                         isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
+                        Name = reader.GetString(reader.GetOrdinal("PatientName")),
                         DrName = reader.GetString(reader.GetOrdinal("DocName")),
                         BedName = reader.GetString(reader.GetOrdinal("BedName")),
                         DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
@@ -246,7 +250,9 @@ namespace Hospital.Models
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = @"SELECT P.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                cmd.CommandText = @"SELECT V.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient,
+                                    D.Name AS DocName, B.BedName AS BedName, V.DateofVisit, V.DateofDischarge, 
+                                    V.Symptoms, V.Disease, V.Treatment,  B.ID as BedID
                                     FROM Visit V
                                     JOIN Patient P ON P.ID = V.PatientID
                                     JOIN Doctor D ON D.ID = V.DoctorID
@@ -269,7 +275,8 @@ namespace Hospital.Models
                         DoctorVisits.Add(new Visit
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("id")),
-                            Name = reader.GetString(reader.GetOrdinal("PatientName")),
+                            BedID = reader.GetInt32(reader.GetOrdinal("BedID")),
+                            Name = reader.GetString(reader.GetOrdinal("BedName")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
                             DrName = reader.GetString(reader.GetOrdinal("DocName")),
@@ -294,7 +301,8 @@ namespace Hospital.Models
             using (var cmd = conn.CreateCommand())
             {
                 conn.Open();
-                cmd.CommandText = @"SELECT P.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment
+                cmd.CommandText = @"SELECT V.ID, P.Name AS PatientName, P.Address, V.PatientType AS InPatient, D.Name AS DocName, B.BedName, 
+                                    V.DateofVisit, V.DateofDischarge, V.Symptoms, V.Disease, V.Treatment , B.ID as BedID
                                     FROM Visit V
                                     JOIN Patient P ON P.ID = V.PatientID
                                     JOIN Doctor D ON D.ID = V.DoctorID
@@ -316,6 +324,7 @@ namespace Hospital.Models
                         PatientVisits.Add(new Visit
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("id")),
+                            BedID = reader.GetInt32(reader.GetOrdinal("BedID")),
                             Name = reader.GetString(reader.GetOrdinal("PatientName")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
@@ -356,7 +365,7 @@ namespace Hospital.Models
                     int rows = cmd.ExecuteNonQuery();
                     success = rows > 0;
                 }
-                catch (Exception ex)
+                catch
                 {
                     success = false;
                 }

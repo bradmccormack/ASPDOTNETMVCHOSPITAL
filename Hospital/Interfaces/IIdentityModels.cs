@@ -32,6 +32,7 @@ namespace Hospital.Interfaces
     public interface IVisit
     {
         int Id { get; set;}
+        int BedID { get; set; }
         string Name { get; set; }
         string Address { get; set; }
         bool isInPatient { get; set; }

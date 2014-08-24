@@ -23,13 +23,13 @@ namespace Hospital.Controllers
             _vm.Search.DateOfVisit = DateTime.Today;
         }
 
-        public PatientController(IPatientRepository Patients)
+        public PatientController(Repository Repository)
         {
-            PatientRepository = Patients;
+            this.Repository = Repository;
         }
 
 
-        public IPatientRepository PatientRepository {get; private set;}
+        public Repository Repository {get; private set;}
 
         [HttpGet]
         public ActionResult PatientList(string Name)
@@ -39,9 +39,9 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 if (!string.IsNullOrEmpty(Name))
-                    Patients = PatientRepository.GetPatients().Where(e => e.Name.ToUpper().Contains(Name.ToUpper())).ToList<IPatient>();
+                    Patients = Repository.GetPatients().Where(e => e.Name.ToUpper().Contains(Name.ToUpper())).ToList<IPatient>();
                 else
-                    Patients = PatientRepository.GetPatients();
+                    Patients = Repository.GetPatients();
 
             }
             else
@@ -56,7 +56,7 @@ namespace Hospital.Controllers
         public ActionResult PatientVisits()
         {
             if(ModelState.IsValid)
-                 _vm.PatientVisitations = PatientRepository.GetVisits();
+                 _vm.PatientVisitations = Repository.GetVisits();
             else 
                 _vm.PatientVisitations = new List<IVisit>();
 
@@ -68,7 +68,7 @@ namespace Hospital.Controllers
         {
             if (ModelState.IsValid)
             {
-                IEnumerable<IVisit> Visits = PatientRepository.GetVisits();
+                IEnumerable<IVisit> Visits = Repository.GetVisits();
 
                 if (!String.IsNullOrEmpty(vm.Search.Name))
                     Visits = Visits.Where(a => a.Name.ToUpper().Contains(vm.Search.Name.ToUpper()));
@@ -92,21 +92,21 @@ namespace Hospital.Controllers
         [HttpGet]
         public ActionResult PatientEditList()
         {
-            _vm.Patients = PatientRepository.GetPatients();
+            _vm.Patients = Repository.GetPatients();
             return View(_vm);
         }
 
         [HttpGet]
         public ActionResult PatientEdit(int PatientID)
         {
-            IPatient Patient = PatientRepository.GetPatient(PatientID);
+            IPatient Patient = Repository.GetPatient(PatientID);
             return View(Patient);
         }
 
         [HttpPost]
         public ActionResult PatientEdit(Patient Patient)
         {
-            bool success = PatientRepository.UpdatePatient(Patient);
+            bool success = Repository.UpdatePatient(Patient);
             if(success)
                 return RedirectToAction("PatientEditList");
 
@@ -122,11 +122,25 @@ namespace Hospital.Controllers
         [HttpPost]
         public ActionResult PatientNew(Patient Patient)
         {
-            bool success = PatientRepository.RegisterPatient(Patient);
+            bool success = Repository.RegisterPatient(Patient);
             if (success)
                 return RedirectToAction("PatientEditList");
 
             return View(Patient);
         }
+
+        [HttpGet]
+        public ActionResult PatientDischarge(int VisitId)
+        {
+           
+            IVisit Visit = Repository.GetVisit(VisitId);
+            IBed Bed = Repository.GetBed(Visit.BedID);
+            ViewModelDischargeInvoice Model = new ViewModelDischargeInvoice();
+            Model.Bed = Bed;
+            Model.Visit = Visit;
+
+            return View(Model);
+        }
+
     }
 }
