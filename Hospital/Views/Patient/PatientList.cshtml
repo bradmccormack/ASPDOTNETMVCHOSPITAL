@@ -17,31 +17,32 @@
         <button type="submit" class="btn btn-default"><i class="fa fa-search"></i> Search</button>
     </div>
 </form>
-
-<table class="table table-borderd table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Date Of Birth</th>
-            <th>Address</th>
-            <th>Phone</th>
-            <th>Date of Registration</th>
-            <th>Emergency Contact</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
+<div class="table-container">
+    <table class="table table-borderd table-striped table-hover">
+        <thead>
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.DateOfBirth</td>
-                <td>@item.Address</td>
-                <td>@item.Phone</td>
-                <td>@item.DateOfRegistration</td>
-                <td>@item.EmergencyContact</td>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Date Of Birth</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Date of Registration</th>
+                <th>Emergency Contact</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.DateOfBirth</td>
+                    <td>@item.Address</td>
+                    <td>@item.Phone</td>
+                    <td>@item.DateOfRegistration</td>
+                    <td>@item.EmergencyContact</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

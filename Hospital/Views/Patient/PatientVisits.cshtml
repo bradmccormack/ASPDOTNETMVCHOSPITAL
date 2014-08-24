@@ -39,46 +39,49 @@
     </div>
 </form>
 
-<table class="table table-striped table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Type</th>
-            <th>Doctor</th>
-            <th>Bed</th>
-            <th>Admission</th>
-            <th>Discharge</th>
-            <th>Symptoms</th>
-            <th>Disease</th>
-            <th>Treatment</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.PatientVisitations)
-        {
+<div class="table-container">
+    <table class="table table-striped table-hover">
+        <thead>
             <tr>
-                <td>@item.Id</td>
-                <td>@item.Name</td>
-                <td>@item.Address</td>
-                <td>@(item.isInPatient ? "in-patient" : "out-patient")</td>
-                <td>@item.DrName</td>
-                <td>@item.BedName</td>
-                <td>@item.DateOfVisit</td>
-                <td>@item.DateOfDischarge</td>
-                <td>@item.Symptoms</td>
-                <td>@item.Disease</td>
-                <td>@item.Treatment</td>
-                <td>
-                    @if (item.isInPatient)
-                    {
-
-                        <button class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("PatientDischarge", "Patient", new { VisitID = item.Id })'"><i class="fa fa-sign-out"></i> Discharge </button>
-                    }
-                </td>       
+                <th>Id</th>
+                <th>Name</th>
+                <th>Address</th>
+                <th>Type</th>
+                <th>Doctor</th>
+                <th>Bed</th>
+                <th>Admission</th>
+                <th>Discharge</th>
+                <th>Symptoms</th>
+                <th>Disease</th>
+                <th>Treatment</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.PatientVisitations)
+            {
+                <tr>
+                    <td>@item.Id</td>
+                    <td>@item.Name</td>
+                    <td>@item.Address</td>
+                    <td>@(item.isInPatient ? "in-patient" : "out-patient")</td>
+                    <td>@item.DrName</td>
+                    <td>@item.BedName</td>
+                    <td>@item.DateOfVisit</td>
+                    <td>@item.DateOfDischarge</td>
+                    <td>@item.Symptoms</td>
+                    <td>@item.Disease</td>
+                    <td>@item.Treatment</td>
+                    <td>
+                        @if (item.isInPatient)
+                        {
+
+                            <button class="btn btn-danger btn-sm" onclick="location.href='@Url.Action("PatientDischarge", "Patient", new { VisitID = item.Id })'"><i class="fa fa-sign-out"></i> Discharge </button>
+                        }
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

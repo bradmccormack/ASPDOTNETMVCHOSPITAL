@@ -42,3 +42,8 @@ div#intro {
     display: block;
     margin: auto;
 }
+
+div.table-container {
+    height: 550px;
+    overflow-y: auto;
+}
