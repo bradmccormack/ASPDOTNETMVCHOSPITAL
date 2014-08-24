@@ -1,0 +1,84 @@
+﻿@model Hospital.Models.ViewModelDoctorAssign
+
+@{
+    ViewBag.Title = "Assign Patient to " + @Model.Doctor.Name;
+}
+
+<h2>Assign Patient to @Model.Doctor.Name</h2>
+<hr />
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        @Html.HiddenFor(model => Model.Doctor.Id)
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Patients, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => Model.Patients, new SelectList(Model.Patients, "ID", "Name"))
+            </div>
+            </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Beds, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(m => Model.Beds, new SelectList(Model.Beds, "ID", "Name"))
+            </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(m => Model.Visit, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(m => Model.Visit.DateOfVisit, new { htmlAttributes = new { @class = "form-control", @type="date" } })
+                    @Html.ValidationMessageFor(model => Model.Visit.DateOfVisit, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Visit.Symptoms, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => Model.Visit.Symptoms, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                @Html.ValidationMessageFor(model => Model.Visit.Symptoms, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Visit.Disease, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => Model.Visit.Disease, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => Model.Visit.Disease, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Visit.Treatment, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.TextAreaFor(m => Model.Visit.Treatment, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.ValidationMessageFor(model => Model.Visit.Treatment, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => Model.Visit.isInPatient, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.CheckBoxFor(m => Model.Visit.isInPatient, new { htmlAttributes = new { @class = "form-control" ,@name="IsFart" } })
+                @Html.ValidationMessageFor(model => Model.Visit.isInPatient, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "DoctorList")
+</div>
