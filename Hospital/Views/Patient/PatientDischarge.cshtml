@@ -1,0 +1,223 @@
+﻿
+
+@model Hospital.Models.ViewModelDischargeInvoice
+
+@{
+    ViewBag.Title = "Patient Discharge";
+}
+
+@section ScriptTag
+{
+    <link rel="stylesheet" href="~/Content/skeuocard.css"/>  
+    <link rel="stylesheet" href="~/Content/skeuocard.reset.css" />
+    <link rel="stylesheet" href="~/Content/demo.css"/>
+
+    <script src="~/Scripts/jquery-1.10.2.min.js" type="text/javascript"></script>
+    <script src="~/Scripts/skeuocard.min.js"></script>
+    <script src="~/Scripts/cssua.min.js"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var PP = $("button#process_payment");
+            var VisitID = $("div.visitdata").data("visitid");
+   
+            PP.click(function (e) {
+                var Self = $(this);
+       
+
+                PP.html("<i class='fa fa-spinner fa-spin'></i> Processing ...");
+                PP.attr("disabled", "disabled");
+                setTimeout(function () {
+                    $.ajax({
+                        type: "POST",
+                        url: "/Patient/PatientDischarge/",
+                        data: JSON.stringify({ cc: "magicnumber123" , vid: VisitID}),
+                        dataType: "html",
+                        contentType: "application/json",
+                        success: function (r) {
+                            if (r == "OK") {
+                                PP.replaceWith("<span class='text-success'>Payment complete -- redirecting to Visit List..");
+                                window.location.href = "/Patient/PatientVisits";
+                            } else {
+                                PP.parent().append("<div class='error'><br/><span class='text-error'>Payment failed. Please try again</div>");
+                                setTimeout(function () {
+                                    $("div.error").remove();
+                                    PP.html("<i class='fa fa-credit-card'></i>  Process Payment");
+                                    PP.removeAttr("disabled");
+                                }, 2000);
+                           
+                            }
+                        }
+                    });
+                }, 2000); //wrap in timeout so can see the pretty animation :-P
+            });
+
+            card = new Skeuocard($("#skeuocard"));
+            card.bind("change.skeucard", function (e, _card) {
+                if (card._state.frontValid && card._state.backValid)
+                    PP.removeAttr("disabled");
+                else
+                    PP.attr("disabled", "disabled");
+  
+            });
+        });
+
+    </script>
+
+}
+
+<h2>Discharge Patient - @Model.Visit.Name</h2>
+<span class="label label-default">@Model.Visit.DateOfVisit to @(DateTime.Today)</span>
+<div>
+    <h4>Invoice #<strong>@(new Random().Next(1, 5000))</strong></h4>
+    <hr />
+
+    <div class="row visitdata" data-visitid="@Model.Visit.Id">
+        <div class="col-md-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => model.Visit.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.Name)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Visit.Address)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.Address)
+                </dd>
+
+                <dt>
+                    Doctor Name
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.DrName)
+                </dd>
+
+                <dt>
+                    Admission
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.DateOfVisit)
+                </dd>
+
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Visit.Symptoms)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.Symptoms)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Visit.Disease)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.Disease)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Visit.Treatment)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Visit.Treatment)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Bed.Name)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Bed.Name)
+                </dd>
+
+                <dt>
+                    Length of Stay (Days)
+                </dt>
+                <dd>
+                    @((DateTime.Today - @Model.Visit.DateOfVisit).TotalDays)
+                </dd>
+
+                <dt>
+                    Rate per day ($)
+                </dt>
+
+                <dd>
+                    $ @(Model.Bed.RatePerDay.ToString("#.##"))
+                </dd>
+            </dl>
+
+            <hr />
+
+
+            <dl class="dl-horizontal">
+                <dt>
+                    <strong>Sub Total</strong>
+                </dt>
+                <dd>
+                    $ @((DateTime.Today - @Model.Visit.DateOfVisit).TotalDays * (double)Model.Bed.RatePerDay)
+                </dd>
+            </dl>
+
+
+            <hr />
+        </div>
+
+        <div class="col-md-6">
+            <div class="form-group">
+                <span>Enter card details</span>
+                <div class="credit-card-input no-js" id="skeuocard">
+                    <p class="no-support-warning">
+                        Either you have Javascript disabled, or you're using an unsupported browser, amigo! That's why you're seeing this old-school credit card input form instead of a fancy new Skeuocard. On the other hand, at least you know it gracefully degrades...
+                    </p>
+                    <label for="cc_type">Card Type</label>
+                    <select name="cc_type">
+                        <option value="">...</option>
+                        <option value="visa">Visa</option>
+                        <option value="discover">Discover</option>
+                        <option value="mastercard">MasterCard</option>
+                        <option value="maestro">Maestro</option>
+                        <option value="jcb">JCB</option>
+                        <option value="unionpay">China UnionPay</option>
+                        <option value="amex">American Express</option>
+                        <option value="dinersclubintl">Diners Club</option>
+                    </select>
+                    <label for="cc_number">Card Number</label>
+                    <input type="text" name="cc_number" id="cc_number" placeholder="XXXX XXXX XXXX XXXX" maxlength="19" size="19">
+                    <label for="cc_exp_month">Expiration Month</label>
+                    <input type="text" name="cc_exp_month" id="cc_exp_month" placeholder="00">
+                    <label for="cc_exp_year">Expiration Year</label>
+                    <input type="text" name="cc_exp_year" id="cc_exp_year" placeholder="00">
+                    <label for="cc_name">Cardholder's Name</label>
+                    <input type="text" name="cc_name" id="cc_name" placeholder="John Doe">
+                    <label for="cc_cvc">Card Validation Code</label>
+                    <input type="text" name="cc_cvc" id="cc_cvc" placeholder="123" maxlength="3" size="3">
+                </div>
+
+                <br />
+                <div class="col-md-offset-2 col-md-10">
+                    <button id="process_payment" type="submit" class="btn btn-success" disabled="disabled"><i class="fa fa-credit-card"></i>  Process Payment</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+
+</div>
+<p>
+    @Html.ActionLink("Back to List", "PatientVisits")
+</p>
