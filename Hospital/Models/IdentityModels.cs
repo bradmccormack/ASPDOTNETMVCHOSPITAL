@@ -84,7 +84,7 @@ namespace Hospital.Models
         public string DrName { get; set; }
         public string BedName { get; set; }
         public System.DateTime DateOfVisit { get; set; }
-        public System.DateTime DateOfDischarge { get; set; }
+        public System.DateTime? DateOfDischarge { get; set; }
         public string Symptoms { get; set; }
         public string Disease { get; set; }
         public string Treatment { get; set; }
@@ -112,6 +112,15 @@ namespace Hospital.Models
         public IEnumerable<IPatient> Patients { get; set; }
         public VisitSearch Search { get; set; }
     }
+
+    public class ViewModelDoctorAssign
+    {
+        public Doctor Doctor { get; set; }
+        public IEnumerable<IPatient> Patients { get; set; }
+        public IEnumerable<IBed> Beds { get; set; }
+        public Visit Visit { get; set; }
+    }
+
 #endregion
 
 

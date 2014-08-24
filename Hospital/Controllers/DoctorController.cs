@@ -13,15 +13,14 @@ namespace Hospital.Controllers
         public DoctorController()
             : this(new Repository(WebConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
         {
-
         }
 
-        public DoctorController(IDoctorRepository Doctors)
+        public DoctorController(Repository Repo)
         {
-            DoctorRepository = Doctors;
+            Repository = Repo;
         }
 
-        public IDoctorRepository DoctorRepository { get; private set; }
+        public Repository Repository { get; private set; }
 
         [HttpGet]
         public ActionResult DoctorList(string name)
@@ -30,14 +29,41 @@ namespace Hospital.Controllers
             if (ModelState.IsValid)
             {
                 if (!string.IsNullOrEmpty(name))
-                    Doctors = DoctorRepository.GetDoctors().Where(e => e.Name.ToUpper().Contains(name.ToUpper())).ToList<IDoctor>();
+                    Doctors = Repository.GetDoctors().Where(e => e.Name.ToUpper().Contains(name.ToUpper())).ToList<IDoctor>();
                 else
-                    Doctors = DoctorRepository.GetDoctors();
+                    Doctors = Repository.GetDoctors();
             }
             else
                 Doctors = new List<IDoctor>();
          
             return View(Doctors);
+        }
+
+        [HttpGet]
+        public ActionResult AssignDoctor(int DoctorID)
+        {
+            ViewModelDoctorAssign DoctorPatientInfo = new ViewModelDoctorAssign();
+            DoctorPatientInfo.Doctor = (Doctor) Repository.GetDoctor(DoctorID);
+            DoctorPatientInfo.Patients = (IEnumerable<IPatient>) Repository.GetPatients();
+            DoctorPatientInfo.Beds = (IEnumerable<IBed>) Repository.GetBeds();
+            DoctorPatientInfo.Visit = new Visit();
+            return View(DoctorPatientInfo);
+        }
+
+
+        [HttpPost]
+        public ActionResult AssignDoctor(Doctor Doctor, int Patients, int Beds, Visit Visit)
+        {
+
+            if(ModelState.IsValid)
+            {
+                bool success = Repository.RegisterVisit(Doctor.Id, Patients, Beds, Visit.DateOfVisit, Visit.Symptoms, Visit.Disease, Visit.Treatment, Visit.isInPatient);
+                 
+                if (success)
+                    return RedirectToAction("DoctorList");
+            }
+            return AssignDoctor(Doctor.Id);
+          
         }
 
     }

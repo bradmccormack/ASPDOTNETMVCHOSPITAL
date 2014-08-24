@@ -38,7 +38,7 @@ namespace Hospital.Interfaces
         string DrName { get; set; }
         string BedName { get; set; }
         System.DateTime DateOfVisit { get; set; }
-        System.DateTime DateOfDischarge { get; set; }
+        System.DateTime? DateOfDischarge { get; set; }
         string Symptoms { get; set; }
         string Disease { get; set; }
         string Treatment { get; set; }

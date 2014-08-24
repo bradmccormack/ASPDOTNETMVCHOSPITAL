@@ -19,7 +19,7 @@ namespace Hospital.Models
         }
 
         #region Bed
-        IBed IBedRepository.GetBed(int id)
+        public IBed GetBed(int id)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using(var cmd = conn.CreateCommand())
@@ -44,7 +44,7 @@ namespace Hospital.Models
             }
         }
 
-        List<IBed> IBedRepository.GetBeds()
+        public List<IBed> GetBeds()
         {
             List<IBed> Beds = new List<IBed>();
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -163,7 +163,7 @@ namespace Hospital.Models
         }
 
 
-        List<IPatient> IPatientRepository.GetPatients()
+        public List<IPatient> GetPatients()
         {
             List<IPatient> Patients = new List<IPatient>();
 
@@ -194,7 +194,7 @@ namespace Hospital.Models
             return Patients;
         }
 
-        IVisit IPatientRepository.GetVisit(int id)
+        public IVisit GetVisit(int id)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (var cmd = conn.CreateCommand())
@@ -214,6 +214,11 @@ namespace Hospital.Models
                         return null;
                     }
 
+                    DateTime? Discharge;
+                    if(reader.IsDBNull(reader.GetOrdinal("DateofDischarge")))
+                        Discharge = null;
+                    else Discharge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge"));
+                    
                     return new Visit
                     {
                         Id = reader.GetInt32(reader.GetOrdinal("id")),
@@ -222,7 +227,7 @@ namespace Hospital.Models
                         DrName = reader.GetString(reader.GetOrdinal("DocName")),
                         BedName = reader.GetString(reader.GetOrdinal("BedName")),
                         DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
-                        DateOfDischarge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge")),
+                        DateOfDischarge = Discharge,
                         Symptoms = reader.GetString(reader.GetOrdinal("Symptoms")),
                         Disease = reader.GetString(reader.GetOrdinal("Disease")),
                         Treatment = reader.GetString(reader.GetOrdinal("Treatment"))
@@ -231,7 +236,7 @@ namespace Hospital.Models
             }
         }
 
-        List<IVisit> IPatientRepository.GetVisits()
+        public List<IVisit> GetVisits()
         {
             List<IVisit> PatientVisits = new List<IVisit>();
 
@@ -251,6 +256,13 @@ namespace Hospital.Models
                 {
                     while (reader.Read())
                     {
+
+                        DateTime? Discharge;
+                        if (reader.IsDBNull(reader.GetOrdinal("DateofDischarge")))
+                            Discharge = null;
+                        else Discharge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge"));
+                    
+
                         PatientVisits.Add(new Visit
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("id")),
@@ -260,7 +272,7 @@ namespace Hospital.Models
                             DrName = reader.GetString(reader.GetOrdinal("DocName")),
                             BedName = reader.GetString(reader.GetOrdinal("BedName")),
                             DateOfVisit = reader.GetDateTime(reader.GetOrdinal("DateOfVisit")),
-                            DateOfDischarge = reader.GetDateTime(reader.GetOrdinal("DateofDischarge")),
+                            DateOfDischarge = Discharge,
                             Symptoms = reader.GetString(reader.GetOrdinal("Symptoms")),
                             Disease = reader.GetString(reader.GetOrdinal("Disease")),
                             Treatment = reader.GetString(reader.GetOrdinal("Treatment"))
@@ -271,10 +283,42 @@ namespace Hospital.Models
             return PatientVisits;
         }
 
+        public bool RegisterVisit(int DoctorID, int PatientID, int BedID, DateTime AdmissionDate, string Symptoms, string Disease, string Treatment, bool InPatient)
+        {
+            bool success = false;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "INSERT INTO Visit(PatientType, DoctorID, PatientID, BedID, DateofVisit,Symptoms, Disease, Treatment) Values(@PatientType, @DoctorID, @PatientID, @BedID, @DateOfVisit, @Symptoms, @Disease, @Treatment)";
+                cmd.Parameters.AddWithValue("@PatientType", InPatient);
+                cmd.Parameters.AddWithValue("@PatientID", PatientID);
+                cmd.Parameters.AddWithValue("@DoctorID", DoctorID);
+                cmd.Parameters.AddWithValue("@BedID", BedID);
+                cmd.Parameters.AddWithValue("@DateOfVisit", AdmissionDate);
+               // cmd.Parameters.AddWithValue("@DateOfDischarge", DateTime.MinValue);
+                cmd.Parameters.AddWithValue("@Symptoms", Symptoms);
+                cmd.Parameters.AddWithValue("@Disease", Disease);
+                cmd.Parameters.AddWithValue("@Treatment", Treatment);
+          
+                try
+                {
+                    int rows = cmd.ExecuteNonQuery();
+                    success = rows > 0;
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                }
+                return success;
+
+            }
+        }
+
         #endregion
 
         #region Doctor
-        IDoctor IDoctorRepository.GetDoctor(int id)
+        public IDoctor GetDoctor(int id)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
             using (var cmd = conn.CreateCommand())
@@ -299,7 +343,7 @@ namespace Hospital.Models
             }
         }
 
-        List<IDoctor> IDoctorRepository.GetDoctors()
+        public List<IDoctor> GetDoctors()
         {
             List<IDoctor> Doctors = new List<IDoctor>();
 

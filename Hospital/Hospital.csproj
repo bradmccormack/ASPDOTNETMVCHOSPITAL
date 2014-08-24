@@ -213,6 +213,7 @@
     <Content Include="Views\Patient\PatientEdit.cshtml" />
     <Content Include="Views\Patient\PatientNew.cshtml" />
     <Content Include="Views\Error\Error404.cshtml" />
+    <Content Include="Views\Doctor\AssignDoctor.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
