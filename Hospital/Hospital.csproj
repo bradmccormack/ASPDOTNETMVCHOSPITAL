@@ -170,7 +170,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\demo.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\skeuocard.css" />
+    <Content Include="Content\skeuocard.reset.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -182,13 +185,17 @@
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="Scripts\creditcardjs-v0.10.11.min.js" />
+    <Content Include="Scripts\cssua.min.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\skeuocard.min.js" />
     <Content Include="Scripts\_references.js" />
+    <Content Include="Views\Patient\PatientDischarge.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -26,12 +26,7 @@ namespace Hospital
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                        "~/Content/font-awesome.min.css",
-                      "~/Content/site.css",
-                      "~/Content/creditcardjs-v0.10.11.min.css"
-                      ));
-
-            bundles.Add(new StyleBundle("~/Content/js").Include(
-                      "~/Content/creditcardjs-v0.10.11.min.js"
+                      "~/Content/site.css"
                       ));
 
             // Set EnableOptimizations to false for debugging. For more information,
