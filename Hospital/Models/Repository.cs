@@ -101,6 +101,29 @@ namespace Hospital.Models
             }
         }
 
+        public bool DischargePatient(int VisitID)
+        {
+            bool success = false;
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            using (var cmd = conn.CreateCommand())
+            {
+                conn.Open();
+                cmd.CommandText = "UPDATE Visit SET PatientType = 0, DateofDischarge = @DischargeDate WHERE ID = @VisitId;";
+                cmd.Parameters.AddWithValue("@DischargeDate", DateTime.Today);
+                cmd.Parameters.AddWithValue("@VisitID", VisitID);
+              
+                try
+                {
+                    int rows = cmd.ExecuteNonQuery();
+                    success = rows > 0;
+                }
+                catch
+                {
+                    success = false;
+                }
+                return success;
+            }
+        }
 
         public bool RegisterPatient(IPatient patient)
         {

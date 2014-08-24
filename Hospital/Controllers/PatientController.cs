@@ -141,6 +141,14 @@ namespace Hospital.Controllers
 
             return View(Model);
         }
-
+        [HttpPost]
+        public string PatientDischarge(string cc, int vid)
+        {
+            bool success = Repository.DischargePatient(vid);
+            if (success)
+                return "OK";
+            else
+                return "Error";
+        }
     }
 }
