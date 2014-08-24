@@ -276,7 +276,7 @@ namespace Hospital.Models
                         {
                             Id = reader.GetInt32(reader.GetOrdinal("id")),
                             BedID = reader.GetInt32(reader.GetOrdinal("BedID")),
-                            Name = reader.GetString(reader.GetOrdinal("BedName")),
+                            Name = reader.GetString(reader.GetOrdinal("PatientName")),
                             Address = reader.GetString(reader.GetOrdinal("Address")),
                             isInPatient = reader.GetBoolean(reader.GetOrdinal("InPatient")),
                             DrName = reader.GetString(reader.GetOrdinal("DocName")),
