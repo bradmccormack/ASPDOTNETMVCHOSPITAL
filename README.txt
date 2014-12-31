@@ -1,7 +1,21 @@
+General Notes
+*************
+
+This was an assignment that I completed over a weekend with minimal knowledge of ASP MVC 3. I have more experience with server side Javascript / Go(lang) and Linux / Nginx stack so there will be parts where it is incorrect or not optimal. 
+
+I decided to push this code up to show what I accomplished with the lack of experience that I have. 
+
+Some decisions I made and why follows
+* Straight ADO.Net - I am not a huge fan of ORM's in general. They are an anti-pattern. Great for initial support of multiple DBMS but later they end up hurting in terms of performance, bugs and so on. If I had to use one I would be using something lightweight like https://github.com/StackExchange/dapper-dot-net  not something heavy like the Entity framework.
+
+* Usage of Linq - This is superfluous in this assignment. The data layer should be filtering out the data at sql level and not passing it back to the controller e.g PatientVisits in Patient Controller. This was done to exlempify that I have some experience with Linq.
+
+Please excuse some of the poor commit messages, next time I will rebase and squashe them up. 
+
 Milestone 1 Notes
 *******************
 
-Please run createall.sql which resides in Hospital/database to create all the schema.
+Please run schema.sql which resides in Hospital/database to create all the schema.
 
 To login please use one of the following user names
 mary, fred or brad
@@ -25,12 +39,5 @@ DischargeInPatient
 
 
 According to the Forum it is possible to write or use an existing plugin for cc validation and I did so.
-Matthew Bolger  INSTRUCTOR MANAGER  
-RE: Credit card validation requirementRE: Credit card validation requirement
-COLLAPSE
-View Original Post Parent Post
-You can use a plugin or write your own. Note that jQuery itself already has credit card validation code ready to be used - you just need to hook into it.
-
-We expect a proper credit card check - so its more than just 16 digits. There are alogirthms that can be used against these various card types which extends beyond the starting digit although that forms part of the check.
 
 Attribution goes to https://github.com/kenkeiter/skeuocard
